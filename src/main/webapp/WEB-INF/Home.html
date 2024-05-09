@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
 </head>
-<body>
 
+<link/>
+
+<body>
 <h1>sei nella home, login effettuato con successo</h1>
+<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
+
+<div th:if="${adminGroupss.size() >0}">
+	<h2>I Tuoi Gruppi</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>descrizione</th>
+					<th>durata</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="g : ${adminGroups}">
+					<td th:text="${g.nome}"></td>
+					<td th:text="${ g.descrizione }"></td>
+					<td th:text="${ g.durata }"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>  
 
 </body>
 </html>

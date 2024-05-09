@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -55,22 +56,27 @@ public class CheckLogin extends HttpServlet{
 			throw new UnavailableException("Couldn't get db connection");
 		}
 	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath()); //non mi è chiara cosa faccia questa roba...
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String usrn = request.getParameter("Username");
-		String pwd = request.getParameter("Password");
+		String usrn = null;
+		String pwd = null;
 		
-		if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters" + usrn + pwd);
+		try {
+			usrn = StringEscapeUtils.escapeJava(request.getParameter("Username"));
+			pwd = StringEscapeUtils.escapeJava(request.getParameter("Password"));
+			
+			if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters" + usrn + pwd);
+				return;
+			}
+		} catch (Exception e) {
+			// for debugging only e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
 		}
+		
 		
 		UserDAO usr = new UserDAO(connection);
 		User u = null;
@@ -95,7 +101,7 @@ public class CheckLogin extends HttpServlet{
 			templateEngine.process(path, ctx, response.getWriter());
 			
 		} else {
-			request.getSession().setAttribute("user", usr);
+			request.getSession().setAttribute("user", u);
 			path = getServletContext().getContextPath() + "/GoToHome";
 			response.sendRedirect(path);
 		}

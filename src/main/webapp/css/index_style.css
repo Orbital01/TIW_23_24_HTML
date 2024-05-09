@@ -4,6 +4,10 @@ body, html {
 	font-family: Arial, sans-serif;
 }
 
+p.errore{
+	color: red;
+}
+
 div.background {
 	background-image: url('../images/sfondo_login.jpg');
 	background-position: center;
