@@ -49,7 +49,17 @@ insert into gruppi (nome, descrizione, durata, admin, min_partecipanti, max_part
     ('Gruppo2', 'Descrizione2', '2024-10-02', 'user2', 2, 20),
     ('Gruppo3', 'Descrizione3', '2024-02-03', 'user3', 3, 30),
     ('Gruppo4', 'Descrizione4', '2024-07-04', 'user4', 4, 40),
-    ('Gruppo5', 'Descrizione5', '2024-06-05', 'user5', 5, 50);
+    ('Gruppo5', 'Descrizione5', '2024-06-05', 'user5', 5, 50),
+    ('Gruppo6', 'Descrizione1', '2023-12-01', 'user5', 1, 10),
+    ('Gruppo7', 'Descrizione2', '2024-10-02', 'user4', 2, 20),
+    ('Gruppo8', 'Descrizione3', '2024-02-03', 'user3', 3, 30),
+    ('Gruppo9', 'Descrizione4', '2024-07-04', 'user2', 4, 40),
+    ('Gruppo10', 'Descrizione5', '2024-06-05', 'user1', 5, 50),
+    ('Gruppo11', 'Descrizione1', '2025-12-01', 'user1', 1, 10),
+    ('Gruppo12', 'Descrizione2', '2025-10-02', 'user2', 2, 20),
+    ('Gruppo13', 'Descrizione3', '2025-02-03', 'user3', 3, 30),
+    ('Gruppo14', 'Descrizione4', '2025-07-04', 'user4', 4, 40),
+    ('Gruppo15', 'Descrizione5', '2025-06-05', 'user5', 5, 50);
 
 INSERT INTO partecipation VALUES
     (1, 'user1'),

@@ -11,11 +11,12 @@
 <h1>sei nella home, login effettuato con successo</h1>
 <p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
 
-<div th:if="${adminGroupss.size() >0}">
+<div th:if="${admin_group.size() >0}">
 	<h2>I Tuoi Gruppi</h2>
 		<table>
 			<thead>
 				<tr>
+					<th>test</th>
 					<th>Nome</th>
 					<th>descrizione</th>
 					<th>durata</th>
@@ -29,6 +30,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<p>TEST</p>
 	</div>  
 
 </body>
