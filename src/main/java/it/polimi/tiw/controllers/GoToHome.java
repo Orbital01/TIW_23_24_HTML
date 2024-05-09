@@ -90,8 +90,8 @@ public class GoToHome extends HttpServlet{
 		}
 
 		//se sono loggato vado alla home con tutti i gruppi come parametro 
-		ServletContext servletContext = getServletContext();
 		String path = "/WEB-INF/Home.html";
+		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("admin_groups", adminGroups);
 		ctx.setVariable("groups_with_user", GroupsWithUser);
@@ -101,6 +101,15 @@ public class GoToHome extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	public void destroy() {
+		try {
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException sqle) {
+			}
 	}
 	
 }
