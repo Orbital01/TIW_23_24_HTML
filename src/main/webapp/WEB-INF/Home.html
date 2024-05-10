@@ -16,17 +16,18 @@
 		<table>
 			<thead>
 				<tr>
-					<th>test</th>
 					<th>Nome</th>
-					<th>descrizione</th>
 					<th>durata</th>
+					<th>Dettagli</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="g : ${admin_groups}">
-					<td th:text="${g.nome}"></td>
-					<td th:text="${ g.descrizione }"></td>
-					<td th:text="${ g.durata }"></td>
+						<td th:text="${g.nome}"></td>
+						<td th:text="${ g.durata }"></td>
+						<td>
+							<a href="#" th:href="@{/DettagliGruppo(groupId=${g.id})}">Details</a>
+						</td>
 				</tr>
 			</tbody>
 		</table>
