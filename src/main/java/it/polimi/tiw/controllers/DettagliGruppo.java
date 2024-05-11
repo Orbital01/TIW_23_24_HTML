@@ -116,7 +116,6 @@ public class DettagliGruppo extends HttpServlet {
 		ctx.setVariable("group", group);
 		ctx.setVariable("partecipants", partecipanti);
 		templateEngine.process(path, ctx, response.getWriter());
-		System.out.print("Sono qui");
 	}
 	
 	public void destroy() {

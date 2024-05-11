@@ -90,7 +90,7 @@ public class GoToHome extends HttpServlet{
 		}
 
 		//se sono loggato vado alla home con tutti i gruppi come parametro 
-		String path = "/WEB-INF/Home.html";
+		String path = "/Home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("admin_groups", adminGroups);

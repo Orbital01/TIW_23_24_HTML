@@ -43,6 +43,50 @@ public class GruppiDAO {
 
 	}
 	
+	//(chiunque?)
+	//ritorna un gruppo dato l'id del gruppo
+	public Gruppi getGroupByIdAndUser(int id, String username) throws SQLException {
+		String query = "SELECT *, DATEDIFF(durata, CURDATE()) AS diff FROM gruppi INNER JOIN partecipation ON gruppi.ID = partecipation.ID_gruppo WHERE gruppi.ID = ? AND (TIW.gruppi.admin = ? OR partecipation.user = ?)";
+		Gruppi gruppo = null;
+		
+		ResultSet result = null;
+		PreparedStatement pstatement = null;
+		try {
+			pstatement = connection.prepareStatement(query);
+			pstatement.setInt(1, id);
+			pstatement.setString(2, username);
+			pstatement.setString(3, username);
+			result = pstatement.executeQuery();
+			
+			while (result.next()) {
+				gruppo = new Gruppi();
+				gruppo.setID(result.getInt("ID"));
+				gruppo.setNome(result.getString("nome"));
+				gruppo.setDescrizione(result.getString("descrizione"));
+				gruppo.setDurata(result.getInt("diff"));
+				gruppo.setAdmin(result.getString("admin"));
+				gruppo.setMaxPartecipanti(result.getInt("max_partecipanti"));
+				gruppo.setMinPartecipanti(result.getInt("min_partecipanti"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (result != null)
+					result.close();
+			} catch (SQLException e1) {
+				throw e1;
+			}
+			try {
+				if (pstatement != null)
+					pstatement.close();
+			} catch (SQLException e1) {
+				throw e1;
+			}
+		}
+		return gruppo;
+	}
+	
 	//(admin)
 	//crea un gruppo 
 	//chiama il PartecipationDAO per aggiungere gli inviti
@@ -67,6 +111,7 @@ public class GruppiDAO {
 			pstatement.setString(1, nome);
 			try(ResultSet result = pstatement.executeQuery();){
 				temp = result.getInt("ID");
+				
 			}
 		}
 		
