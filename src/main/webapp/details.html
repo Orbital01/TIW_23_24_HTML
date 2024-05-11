@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title th:text="${group.nome}">Nome gruppo</title>
+	</head>
+	<body>
+		<span th:text="${group.nome}">Nome</span>
+		<span th:text="${group.descrizione}">Descrizione</span>
+		<span th:text="${group.durata}">Differenza</span>
+		<span th:text="${group.admin}">Admin</span>
+		<span th:text="${group.maxPartecipanti}">Max partecipanti</span>
+		<span th:text="${group.minPartecipanti}">Min partecipanti</span>
+		<div th:each="user : ${partecipants}">
+			<span th:text="${user}">Anagrafica</span>
+		</div>
+	</body>
+</html>
