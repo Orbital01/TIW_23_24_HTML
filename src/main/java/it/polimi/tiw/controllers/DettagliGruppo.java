@@ -98,7 +98,10 @@ public class DettagliGruppo extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		if (group == null) response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
+		if (group == null) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
+			return;
+		}
 		
 		//	codice per farmi dare l'elenco dei partecipanti del singolo gruppo con id = id
 		ArrayList<String> partecipanti = new ArrayList<>();
