@@ -21,7 +21,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.beans.*;
-import it.polimi.tiw.controllers.*;
 import it.polimi.tiw.dao.*;
 
 /**
@@ -113,7 +112,7 @@ public class DettagliGruppo extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		String path = "/details.html";
+		String path = "/WEB-INF/details.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("group", group);

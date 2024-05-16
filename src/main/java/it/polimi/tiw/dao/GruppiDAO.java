@@ -114,7 +114,9 @@ public class GruppiDAO {
 				
 			}
 		}
-		
+		//agggiungo ai partecipanti l'admin stesso 
+		partecipanti.add(admin);
+		//chiamo il partecipation dao e aggiungo tutti i partecipanti 
 		PartecipationDAO pdao = new PartecipationDAO(this.connection);
 		pdao.addPartecipation(partecipanti, temp);
 		
