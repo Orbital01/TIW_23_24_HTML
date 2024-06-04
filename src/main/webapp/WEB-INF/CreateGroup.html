@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Create Group</title>
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+
+<body>
+	<div class="background">
+		<div class="pageContainer">
+			<header>
+				<img src="images/logo.png" alt="Logo" class="logo">
+				<div id="menu">
+					<details>
+						<summary>Menu</summary>
+						<nav>
+							<a th:href="@{/GoToHome}"> Home</a>
+							<a class= "logout" th:href="@{/Logout}"> Logout</a>
+						</nav>
+					</details>
+				</div>
+			</header>
+			
+			<form action="CheckGroup" method="POST">
+        nome: <input type="text" placeholder="nome" name="nome" required>
+        descrizione: <input type="text" placeholder="descrizione" name="descrizione" required>
+        giorni: <input type="number" placeholder="numero di giorni" name="giorni" required>
+        minPartecipanti: <input type="number" placeholder="minPartecipanti" name="minPartecipanti" required>
+        maxPartecipanti: <input type="number" placeholder="maxPartecipanti" name="maxPartecipanti" required>
+        
+        <p class="errore" th:text=" ${errorMsg}"></p>
+        <button class = "creazione" type="submit">Crea Gruppo</button>
+        
+        </form>
+			
+			
+		</div>
+	</div>
+</body>
+
+</html>

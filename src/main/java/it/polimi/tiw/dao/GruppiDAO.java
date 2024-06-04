@@ -45,8 +45,8 @@ public class GruppiDAO {
 	
 	//(chiunque)
 	//ritorna un gruppo dato l'id del gruppo
-	public Gruppi getGroupByIdAndUser(int id, String username) throws SQLException {
-		String query = "SELECT *, DATEDIFF(durata, CURDATE()) AS diff FROM gruppi INNER JOIN partecipation ON gruppi.ID = partecipation.ID_gruppo WHERE gruppi.ID = ? AND (TIW.gruppi.admin = ? OR partecipation.user = ?)";
+	public Gruppi getGroupById(int id) throws SQLException {
+		String query = "SELECT *, DATEDIFF(durata, CURDATE()) AS diff FROM gruppi WHERE gruppi.ID = ?";
 		Gruppi gruppo = null;
 		
 		ResultSet result = null;
@@ -54,8 +54,6 @@ public class GruppiDAO {
 		try {
 			pstatement = connection.prepareStatement(query);
 			pstatement.setInt(1, id);
-			pstatement.setString(2, username);
-			pstatement.setString(3, username);
 			result = pstatement.executeQuery();
 			
 			while (result.next()) {
@@ -97,8 +95,8 @@ public class GruppiDAO {
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, nome);
 			pstatement.setString(2, descrizione);
-			pstatement.setInt(3, durata); //non so se funziona, da testare!!
-			pstatement.setString(4, admin);
+			pstatement.setInt(3, durata); 
+			pstatement.setString(4, admin); //qua si mette lo username
 			pstatement.setInt(5, minPartecipanti);
 			pstatement.setInt(6, maxPartecipanti);
 			pstatement.executeUpdate();
@@ -106,7 +104,7 @@ public class GruppiDAO {
 		
 		int temp;
 		
-		String query2 = "SELECT ID FROM gruppi WHERE nome = ?"; //tanto il nome è unique
+		String query2 = "SELECT ID FROM gruppi WHERE nome = ?"; //il nome è unique!!!
 		try (PreparedStatement pstatement = connection.prepareStatement(query2);) {
 			pstatement.setString(1, nome);
 			try(ResultSet result = pstatement.executeQuery();){
@@ -120,6 +118,25 @@ public class GruppiDAO {
 		PartecipationDAO pdao = new PartecipationDAO(this.connection);
 		pdao.addPartecipation(partecipanti, temp);
 		
+		//TODO aggiungere il ritorno di un true o false se l'aggiunta va a buon fine
+		
+	}
+	
+	//(admin)
+	//controlla se esiste un gruppo con un certo nome
+	//ritorna true se esiste 
+	public Boolean alreadyExistingGroup(String nome) throws SQLException {
+		String query = "SELECT * FROM gruppi where nome = ?";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setString(1, nome);
+			try (ResultSet result = pstatement.executeQuery();) {
+				if (!result.isBeforeFirst())
+					return false;
+				else {
+					return true;
+				}
+			}
+		}
 	}
 	
 }

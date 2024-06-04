@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="css/home.css">
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="css/home.css">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
 					<details>
 						<summary>Menu</summary>
 						<nav>
-							<a href="">Crea un Gruppo</a> 
+							<a th:href="@{/GoToCreateGroup}">Crea un Gruppo</a> 
 							<a class= "logout" th:href="@{/Logout}"> Logout</a>
 						</nav>
 					</details>
@@ -23,8 +23,7 @@
 
 			</header>
 
-			<h2
-				th:text="${'Nice to see you again ' + session.user.nome + ' ' + session.user.cognome}"></h2>
+			<h2 th:text="${'Nice to see you again ' + session.user.nome + ' ' + session.user.cognome}"></h2>
 
 			<div th:if="${admin_groups.size() >0}">
 				<h3>I Tuoi Gruppi</h3>

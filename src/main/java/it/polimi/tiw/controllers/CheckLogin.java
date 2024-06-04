@@ -33,6 +33,7 @@ public class CheckLogin extends HttpServlet{
 	}
 	
 	public void init() throws ServletException {
+		
 		try {
 			ServletContext context = getServletContext();
 			String driver = context.getInitParameter("dbDriver");

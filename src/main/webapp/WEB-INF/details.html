@@ -1,17 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title th:text="${group.nome}">Nome gruppo</title>
-	</head>
-	<body>
-		<span th:text="${group.nome}">Nome</span>
-		<span th:text="${group.descrizione}">Descrizione</span>
-		<span th:text="${group.durata}">Differenza</span>
-		<span th:text="${group.admin}">Admin</span>
-		<span th:text="${group.maxPartecipanti}">Max partecipanti</span>
-		<span th:text="${group.minPartecipanti}">Min partecipanti</span>
-		<div th:each="user : ${partecipants}">
-			<span th:text="${user}">Anagrafica</span>
+<head>
+<title th:text="${group.nome}">Nome gruppo</title>
+<link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+
+<body>
+	<div class="background">
+		<div class="pageContainer">
+			<header>
+				<img src="images/logo.png" alt="Logo" class="logo">
+				<div id="menu">
+					<details>
+						<summary>Menu</summary>
+						<nav>
+							<a th:href="@{/GoToHome}"> Home</a>
+							<a th:href="@{/GoToCreateGroup}">Crea un Gruppo</a> 
+							<a class="logout"th:href="@{/Logout}"> Logout</a>
+						</nav>
+					</details>
+				</div>
+			</header>
+			<table class="tabellaProg">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Descrizione</th>
+							<th>Giorni rimasti</th>
+							<th>Admin username</th>
+							<th>Numero massimo partecipanti</th>
+							<th>Numero minimo partecipanti</th>
+							<th>partecipanti</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td> <h4 th:text="${group.nome}">Nome</h4> </td>
+							<td> <p th:text="${group.descrizione}">Descrizione</p> </td>
+							<td> <p th:text="${group.durata}">Differenza</p> </td>
+							<td> <p th:text="${group.admin}">Admin</p> </td>
+							<td> <p th:text="${group.maxPartecipanti}">Max partecipanti</p></td>
+							<td> <p th:text="${group.minPartecipanti}">Min partecipanti</p></td>
+							<td> <div th:each="user : ${partecipants}">
+								<span th:text="${user}">Anagrafica</span> 
+								</div> 
+							</td>
+						</tr>
+					</tbody>
+				</table> 
 		</div>
-	</body>
+	</div>
+</body>
 </html>

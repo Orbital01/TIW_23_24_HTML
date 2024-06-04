@@ -52,7 +52,7 @@ public class PartecipationDAO {
 	//ritorna i dettagli dei partecipanti di un gruppo (escluso l'admin)
 	public ArrayList<String> getPartecipants(int id) throws SQLException{
 		ArrayList<String> nomi = new ArrayList<String>();
-		String query = "select distinct nome, cognome FROM partecipation NATURAL JOIN users WHERE ID_gruppo = ? ORDER BY cognome asc ";
+		String query = "select distinct nome, cognome FROM partecipation p JOIN users u ON p.user=u.username WHERE ID_gruppo = ? ORDER BY cognome asc ";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, id);
 			try (ResultSet result = pstatement.executeQuery();) {

@@ -37,6 +37,20 @@ img.logo {
     height: 100px;
 }
 
+button.creazione {
+	width: 95%;
+	padding: 10px;
+	background-color: #0056b3;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button.creazione:hover {
+	background-color: #004494;
+}
+
 details {
     width: 200px;
     background: #f9f9f9;
