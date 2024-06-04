@@ -43,7 +43,7 @@ public class GruppiDAO {
 
 	}
 	
-	//(chiunque?)
+	//(chiunque)
 	//ritorna un gruppo dato l'id del gruppo
 	public Gruppi getGroupByIdAndUser(int id, String username) throws SQLException {
 		String query = "SELECT *, DATEDIFF(durata, CURDATE()) AS diff FROM gruppi INNER JOIN partecipation ON gruppi.ID = partecipation.ID_gruppo WHERE gruppi.ID = ? AND (TIW.gruppi.admin = ? OR partecipation.user = ?)";

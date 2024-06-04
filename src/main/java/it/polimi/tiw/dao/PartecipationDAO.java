@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import it.polimi.tiw.beans.Gruppi;
 import java.util.ArrayList;
 
+
+//ricordati che il database è così composto 
+//user entity | gruppo entity | partecipation relation | amministra relation(entità debole con gruppo)
+
 public class PartecipationDAO {
 
 	private Connection connection;
@@ -16,10 +20,10 @@ public class PartecipationDAO {
 	}
 
 	// (user)
-	// recupera tutti i gruppi dove l'user è stato invitato
+	// recupera tutti i gruppi contenenti lo user (dove lo user non è amministratore)
 	public ArrayList<Gruppi> getGroupsWithUser(String username) throws SQLException {
 		
-		String query = "SELECT ID, nome, descrizione, DATEDIFF(durata, CURDATE()) AS diff, admin, min_partecipanti, max_partecipanti FROM partecipation JOIN gruppi ON ID_gruppo=ID  WHERE user = ? and durata >= CURDATE()";
+		String query = "SELECT ID, nome, descrizione, DATEDIFF(durata, CURDATE()) AS diff, admin, min_partecipanti, max_partecipanti FROM partecipation JOIN gruppi ON ID_gruppo=ID  WHERE user = ? and durata >= CURDATE() and admin != user";
 		ArrayList<Gruppi> listaGruppi = new ArrayList<Gruppi>();
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {

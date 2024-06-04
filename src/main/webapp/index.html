@@ -11,6 +11,7 @@
     <div class="login-container">
         <h1>Login</h1>
         <form action="CheckLogin" method="POST">
+        	<p class="confermaReg" th:text=" ${userRegistred}"></p>
         	Username: <input type="text" placeholder="Username" name="Username" required>
         	Password: <input type="password" placeholder="Password" name="Password" required>
         	<button type="submit">Log In</button>

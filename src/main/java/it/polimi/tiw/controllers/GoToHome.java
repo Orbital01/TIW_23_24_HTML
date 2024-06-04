@@ -93,8 +93,8 @@ public class GoToHome extends HttpServlet{
 		String path = "/WEB-INF/Home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("admin_groups", adminGroups);
-		ctx.setVariable("groups_with_user", GroupsWithUser);
+		ctx.setVariable("admin_groups", adminGroups); //gruppi dove lo user è amministratore
+		ctx.setVariable("groups_with_user", GroupsWithUser); //gruppi dove lo user è stato invitato
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

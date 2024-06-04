@@ -4,6 +4,10 @@ body, html {
 	font-family: Arial, sans-serif;
 }
 
+p.confermaReg{
+	color: green;
+}
+
 p.errore{
 	color: red;
 }

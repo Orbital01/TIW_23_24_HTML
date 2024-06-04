@@ -46,7 +46,7 @@ public class UserDAO {
 
 		if (!alreadyExistingUsername(username)) {
 
-			String query = "INSERT INTO users VALUES (?, ?, ?, ?, ?,?)";
+			String query = "INSERT INTO users VALUES (?, ?, ?, ?, ?)";
 
 			try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 				pstatement.setString(1, username);
