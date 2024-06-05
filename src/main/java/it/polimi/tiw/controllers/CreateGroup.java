@@ -119,7 +119,6 @@ public class CreateGroup extends HttpServlet {
 			//prima del redirect resetto il contatore per delle prossime creazioni 
 			tentativi = null;
 			request.getSession().setAttribute("tentativi", tentativi);
-			
 			response.sendRedirect(path);
 			return;
 		}
@@ -139,8 +138,7 @@ public class CreateGroup extends HttpServlet {
 				return;
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
-				//response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to add group");
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to add group");
 				return;
 			}
 			

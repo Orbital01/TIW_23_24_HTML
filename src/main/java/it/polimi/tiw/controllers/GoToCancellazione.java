@@ -34,7 +34,6 @@ public class GoToCancellazione extends HttpServlet {
 	 */
 	public GoToCancellazione() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public void init() throws ServletException {
@@ -68,14 +67,14 @@ public class GoToCancellazione extends HttpServlet {
 
 		// se non sono loggato torno alla pagina di login
 		String loginpath = getServletContext().getContextPath() + "/index.html";
-
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {
 			response.sendRedirect(loginpath);
 			return;
 		}
 
-		String path = getServletContext().getContextPath() + "/WEB-INF/cancellazione.html";
+		//altrimenti vado alla pagina cancellazione.html
+		String path = "/WEB-INF/cancellazione.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		templateEngine.process(path, ctx, response.getWriter());
