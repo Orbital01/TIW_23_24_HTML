@@ -124,8 +124,9 @@ public class CheckGroup extends HttpServlet {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "il minimo non può essere maggiore del massimo");
-			path = "/index.html";
+			path = "/WEB-INF/CreateGroup.html";
 			templateEngine.process(path, ctx, response.getWriter());
+			return;
 		}
 		//controllo che giorni sia mmaggiore di 0
 		if(giorni==0){
@@ -135,6 +136,7 @@ public class CheckGroup extends HttpServlet {
 			ctx.setVariable("errorMsg", "un gruppo non può avere durata 0 giorni");
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
+			return;
 		}
 		
 		//se tutto ok vado alla pagina della anagrafica, passando i dati inseriti come parametro
@@ -165,7 +167,9 @@ public class CheckGroup extends HttpServlet {
 	}
 	
 	private Boolean checkMinMax(int min, int max) {
-		if(min<=max) {
+		if(min<0 || max<0) {
+			return false;
+		} else if(min<=max) {
 			return true;
 		}else {
 			return false;

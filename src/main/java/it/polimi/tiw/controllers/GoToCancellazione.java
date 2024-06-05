@@ -20,58 +20,65 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 /**
- * Servlet implementation class GoToCreateGroup
+ * Servlet implementation class GoToCancellazione
  */
-@WebServlet("/GoToCreateGroup")
-public class GoToCreateGroup extends HttpServlet {
+@WebServlet("/GoToCancellazione")
+public class GoToCancellazione extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private Connection connection;
+	private Connection connection = null;
 	private TemplateEngine templateEngine;
 
-	public GoToCreateGroup() {
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public GoToCancellazione() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public void init() throws ServletException {
-		ServletContext context = getServletContext();
-		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(context);
-		templateResolver.setTemplateMode(TemplateMode.HTML);
-		this.templateEngine = new TemplateEngine();
-		this.templateEngine.setTemplateResolver(templateResolver);
-		templateResolver.setSuffix(".html");
-
 		try {
+			ServletContext context = getServletContext();
 			String driver = context.getInitParameter("dbDriver");
 			String url = context.getInitParameter("dbUrl");
 			String user = context.getInitParameter("dbUser");
 			String password = context.getInitParameter("dbPassword");
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, user, password);
+
+			ServletContext servletContext = getServletContext();
+
+			ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+			templateResolver.setTemplateMode(TemplateMode.HTML);
+			this.templateEngine = new TemplateEngine();
+			this.templateEngine.setTemplateResolver(templateResolver);
+			templateResolver.setSuffix(".html");
+
 		} catch (ClassNotFoundException e) {
 			throw new UnavailableException("Can't load database driver");
 		} catch (SQLException e) {
 			throw new UnavailableException("Couldn't get db connection");
 		}
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		// se non sono loggato torno alla pagina di login
 		String loginpath = getServletContext().getContextPath() + "/index.html";
+
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {
 			response.sendRedirect(loginpath);
 			return;
 		}
-		
-		//carico la pagina con la form di creazione del gruppo
-		String path = "/WEB-INF/CreateGroup.html";
+
+		String path = getServletContext().getContextPath() + "/WEB-INF/cancellazione.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		templateEngine.process(path, ctx, response.getWriter());
-
 	}
 
 	/**
@@ -80,6 +87,7 @@ public class GoToCreateGroup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
@@ -89,8 +97,7 @@ public class GoToCreateGroup extends HttpServlet {
 				connection.close();
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		}
+			}
 	}
 
 }

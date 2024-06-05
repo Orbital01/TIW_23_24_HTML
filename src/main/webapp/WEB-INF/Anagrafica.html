@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User List</title>
+<link rel="stylesheet" href="css/create_group.css">
+</head>
+<body>
+<div class="background">
+		<div class="pageContainer">
+    <h1>Lista degli Utenti</h1>
+    <form method="post" action="CreateGroup">
+        <ul>
+            <li th:each="user : ${users}">
+                <label>
+                    <input type="checkbox" th:value="${user.username}" name="selectedUsers" />
+                    <span th:text="${user.nome}">Username</span>
+                </label>
+            </li>
+        </ul>
+        <p class="errore" th:text=" ${errorMsg}"></p>
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+    </div>
+</body>
+</html>

@@ -82,6 +82,7 @@ public class UserDAO {
 	
 	//(admin)
 	//restituisce l'anagrafica di tutti gli user registrati, ordinata
+	//proprio tutti!
 	public ArrayList<User> getAllUser() throws SQLException{
 		String query = "SELECT * FROM users ORDER BY cognome asc";
 		ArrayList<User> listaUtenti = new ArrayList<User>();

@@ -1,42 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>Create Group</title>
-	<link rel="stylesheet" type="text/css" href="css/home.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form di Gruppo</title>
+<link rel="stylesheet" href="css/create_group.css">
 </head>
-
 <body>
 	<div class="background">
 		<div class="pageContainer">
-			<header>
+		<header>
 				<img src="images/logo.png" alt="Logo" class="logo">
 				<div id="menu">
 					<details>
 						<summary>Menu</summary>
 						<nav>
-							<a th:href="@{/GoToHome}"> Home</a>
+							<a th:href="@{/GoToHome}">Home</a> 
 							<a class= "logout" th:href="@{/Logout}"> Logout</a>
 						</nav>
 					</details>
 				</div>
+
 			</header>
-			
-			<form action="CheckGroup" method="POST">
-        nome: <input type="text" placeholder="nome" name="nome" required>
-        descrizione: <input type="text" placeholder="descrizione" name="descrizione" required>
-        giorni: <input type="number" placeholder="numero di giorni" name="giorni" required>
-        minPartecipanti: <input type="number" placeholder="minPartecipanti" name="minPartecipanti" required>
-        maxPartecipanti: <input type="number" placeholder="maxPartecipanti" name="maxPartecipanti" required>
-        
-        <p class="errore" th:text=" ${errorMsg}"></p>
-        <button class = "creazione" type="submit">Crea Gruppo</button>
-        
-        </form>
-			
-			
+			<div class="formContainer">
+				<form action="CheckGroup" method="POST">
+				
+					<div class="formGroup">
+						<label for="nome">Nome:</label> 
+						<input type="text" id="nome" placeholder="nome" name="nome" required>
+					</div>
+					
+					<div class="formGroup">
+						<label for="descrizione">Descrizione:</label> 
+						<input type="text" id="descrizione" placeholder="descrizione" name="descrizione"required>
+					</div>
+					
+					<div class="formGroup">
+						<label for="giorni">Giorni:</label> <input type="number"
+							id="giorni" placeholder="numero di giorni" name="giorni" required>
+					</div>
+					
+					<div class="formGroup">
+						<label for="minPartecipanti">Min Partecipanti:</label> 
+						<input type="number" id="minPartecipanti" placeholder="minPartecipanti"name="minPartecipanti" required>
+					</div>
+					
+					<div class="formGroup">
+						<label for="maxPartecipanti">Max Partecipanti:</label> 
+						<input type="number" id="maxPartecipanti" placeholder="maxPartecipanti" name="maxPartecipanti" required>
+					</div>
+
+					<p class="errore" th:text="${errorMsg}"></p>
+					<button class="creazione" type="submit">INVIA</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
-
 </html>
