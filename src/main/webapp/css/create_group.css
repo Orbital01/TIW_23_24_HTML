@@ -5,6 +5,14 @@ body, html {
 	font-family: Arial, sans-serif;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent ;
+}
+
 /* Background Container */
 div.background {
 	background-image: url('../images/sfondo_login.jpg');
@@ -18,17 +26,14 @@ div.background {
 }
 
 /* Page Container */
+/* Page Container */
 div.pageContainer {
-	background-color: rgba(255, 255, 255, 0.8);
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	width: 1000px;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	animation: fadeIn 1s;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 1000px;
+    animation: fadeIn 1s;
 }
 
 /* Form Container */
@@ -50,15 +55,6 @@ input {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-}
-
-/* Header */
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 20px;
-	background-color: transparent;
 }
 
 img.logo {

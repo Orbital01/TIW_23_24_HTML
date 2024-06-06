@@ -4,6 +4,14 @@ body, html {
 	font-family: Arial, sans-serif;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent ;
+}
+
 div.background {
 	background-image: url('../images/sfondo_login.jpg');
 	background-position: center;
@@ -24,14 +32,6 @@ div.pageContainer {
 	text-align: center;
 	animation: fadeIn 1s
 	}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: transparent ;
-}
 
 img.logo {
     height: 100px;
