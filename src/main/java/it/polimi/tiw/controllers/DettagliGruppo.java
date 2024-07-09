@@ -76,19 +76,22 @@ public class DettagliGruppo extends HttpServlet {
 		String id_param = request.getParameter("groupId");
 		Integer id = -1;
 		
+		//se è nullo lancio una eccezione
 		if (id_param == null) response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing group ID");
 		
+		//se non è un numero lancio una eccezione
 		try {
 			id = Integer.parseInt(id_param);
 		} catch (NumberFormatException e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid group ID");
+			return;
 		}
+		
 		
 		Gruppi group = null;
 		try {
 			group = new GruppiDAO(connection).getGroupById(id);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -96,8 +99,7 @@ public class DettagliGruppo extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
 			return;
 		}
-		
-		
+			
 		//	codice per farmi dare l'elenco dei partecipanti del singolo gruppo con id = id
 		ArrayList<String> partecipanti = new ArrayList<>();
 		
@@ -107,6 +109,17 @@ public class DettagliGruppo extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// verifico che l'utente appartenga a quel gruppo
+		// in caso negativo non può visualizzare quel gruppo
+		User utente = (User)session.getAttribute("user");
+		
+		if (!group.getadmin().equals(utente.getUsername()) && !partecipanti.contains(utente.getUsername())) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
+			return;
+		}
+				
+		
 		
 		String path = "/WEB-INF/details.html";
 		ServletContext servletContext = getServletContext();
