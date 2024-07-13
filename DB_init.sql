@@ -5,10 +5,10 @@ use TIW;
 create table users
 (
     username varchar(50) primary key,
-    password varchar(50),
+    password varchar(50) not null,
     email    varchar(50) not null,
-    nome     varchar(50),
-    cognome  varchar(50)
+    nome     varchar(50) not null ,
+    cognome  varchar(50) not null
 );
 
 create table gruppi
