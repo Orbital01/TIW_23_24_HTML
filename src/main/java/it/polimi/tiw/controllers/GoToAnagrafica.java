@@ -74,11 +74,11 @@ public class GoToAnagrafica extends HttpServlet {
 		}
 		
 		//salvo tutti i parametri dalla pagina precedente
-		String nome = (String) session.getAttribute("nome");
-		String descrizione = (String) session.getAttribute("descrizione");
-		int giorni = (int) session.getAttribute("giorni");
-		int minPartecipanti = (int) session.getAttribute("minPartecipanti");
-		int maxPartecipanti =(int) session.getAttribute("maxPartecipanti");
+		//String nome = (String) session.getAttribute("nome");
+		//String descrizione = (String) session.getAttribute("descrizione");
+		//int giorni = (int) session.getAttribute("giorni");
+		//int minPartecipanti = (int) session.getAttribute("minPartecipanti");
+		//int maxPartecipanti =(int) session.getAttribute("maxPartecipanti");
 		
 		//carico tutti gli utenti
 		ArrayList<User> utenti = null;
@@ -95,15 +95,17 @@ public class GoToAnagrafica extends HttpServlet {
 		//passo tutti i parametri di prima
 		String path = "/WEB-INF/Anagrafica.html";
 		
-		request.getSession().setAttribute("nome", nome);
-		request.getSession().setAttribute("descrizione", descrizione);
-		request.getSession().setAttribute("giorni", giorni);
-		request.getSession().setAttribute("minPartecipanti", minPartecipanti);
-		request.getSession().setAttribute("maxPartecipanti", maxPartecipanti);
+		//request.getSession().setAttribute("nome", nome);
+		//request.getSession().setAttribute("descrizione", descrizione);
+		//request.getSession().setAttribute("giorni", giorni);
+		//request.getSession().setAttribute("minPartecipanti", minPartecipanti);
+		//request.getSession().setAttribute("maxPartecipanti", maxPartecipanti);
+		
 		ServletContext servletContext = getServletContext();
 		
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("users", utenti); 
+		
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}

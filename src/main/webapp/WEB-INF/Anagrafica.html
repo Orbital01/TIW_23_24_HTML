@@ -8,21 +8,22 @@
 </head>
 <body>
 <div class="background">
-		<div class="pageContainer">
-    <h1>Lista degli Utenti</h1>
-    <form method="post" action="CreateGroup">
-        <ul>
-            <li th:each="user : ${users}">
-                <label>
-                    <input type="checkbox" th:value="${user.username}" name="selectedUsers" />
-                    <span th:text="${user.nome}">Username</span>
-                </label>
-            </li>
-        </ul>
-        <p class="errore" th:text=" ${errorMsg}"></p>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="pageContainer">
+        <h1>Lista degli Utenti</h1>
+        <form method="post" action="CreateGroup">
+            <ul>
+                <li th:each="user : ${users}">
+                    <label>
+                        <input type="checkbox" th:value="${user.username}" name="selectedUsers" 
+                               th:checked="${selectedUsers != null and #arrays.contains(selectedUsers, user.username)}" />
+                        <span th:text="${user.nome}">Username</span>
+                    </label>
+                </li>
+            </ul>
+            <p class="errore" th:text="${errorMsg}"></p>
+            <button type="submit">Submit</button>
+        </form>
     </div>
-    </div>
+</div>
 </body>
 </html>

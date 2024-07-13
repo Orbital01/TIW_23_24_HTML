@@ -41,6 +41,7 @@ public class CreateGroup extends HttpServlet {
 	}
 
 	public void init() throws ServletException {
+		
 		try {
 			ServletContext context = getServletContext();
 			String driver = context.getInitParameter("dbDriver");
@@ -157,6 +158,7 @@ public class CreateGroup extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to recover Users");
 				return;
 			}
+			
 			String path = "/WEB-INF/Anagrafica.html";
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -172,7 +174,10 @@ public class CreateGroup extends HttpServlet {
 			
 			ctx.setVariable("selectedUsers", utentiSelezionati);
 			ctx.setVariable("users", tuttiUtenti); 
+			
+			
 			templateEngine.process(path, ctx, response.getWriter());
+			
 			return;
 		}
 
@@ -202,7 +207,7 @@ public class CreateGroup extends HttpServlet {
 
 	// controlla che l'utente non abbia superato i tre tentativi
 	private Boolean checkTries(int tentativi) {
-		if (tentativi == 3) {
+		if (tentativi > 3) {
 			return true;
 		} else {
 			return false;
