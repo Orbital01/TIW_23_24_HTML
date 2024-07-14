@@ -58,7 +58,7 @@ public class PartecipationDAO {
 			try (ResultSet result = pstatement.executeQuery();) {
 				while(result.next()) {
 					String temp;
-					temp = result.getString("nome") + "" + result.getString("cognome");
+					temp = result.getString("nome") + " " + result.getString("cognome");
 					nomi.add(temp);
 				}
 				return nomi;

@@ -114,7 +114,13 @@ public class DettagliGruppo extends HttpServlet {
 		// in caso negativo non può visualizzare quel gruppo
 		User utente = (User)session.getAttribute("user");
 		
-		if (!group.getadmin().equals(utente.getUsername()) && !partecipanti.contains(utente.getUsername())) {
+		if (!group.getadmin().equals(utente.getUsername()) && !partecipanti.contains(utente.getNome()+ " " + utente.getCognome())) {
+			
+			System.out.println(utente.getUsername());
+			for(String s : partecipanti){
+				System.out.println(s);
+			}	
+			
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
 			return;
 		}
