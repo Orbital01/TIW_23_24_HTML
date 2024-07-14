@@ -73,7 +73,14 @@ public class CreateGroup extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		doPost(request, response);
+		
+	}
 
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// se non sono loggato torno alla pagina di login
 		String loginpath = getServletContext().getContextPath() + "/index.html";
 
@@ -91,12 +98,12 @@ public class CreateGroup extends HttpServlet {
 		int maxPartecipanti = (int) session.getAttribute("maxPartecipanti");
 
 		// prendo lo username di chi sta effettuando l'operazione
-		User user = (User)session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		String admin = user.getUsername();
 
 		// prendo gli user selezionati
 		String[] utentiSelezionati = request.getParameterValues("selectedUsers");
-		
+
 		ArrayList<String> utenti = new ArrayList<>();
 		for (String userId : utentiSelezionati) {
 			utenti.add(userId);
@@ -116,8 +123,8 @@ public class CreateGroup extends HttpServlet {
 		if (checkTries(tentativi)) {
 			// se è a 3 lo porto alla pagina CANCELLAZIONE
 			String path = getServletContext().getContextPath() + "/GoToCancellazione";
-			
-			//prima del redirect resetto il contatore per delle prossime creazioni 
+
+			// prima del redirect resetto il contatore per delle prossime creazioni
 			tentativi = null;
 			request.getSession().setAttribute("tentativi", tentativi);
 			response.sendRedirect(path);
@@ -125,68 +132,63 @@ public class CreateGroup extends HttpServlet {
 		}
 
 		// se è ok procedo con la creazione del gruppo e resetto il contatore
-		if (isOk==0) {
+		if (isOk == 0) {
 			GruppiDAO groupDao = new GruppiDAO(connection);
-			
+
 			try {
 				groupDao.addGroup(nome, descrizione, giorni, admin, maxPartecipanti, minPartecipanti, utenti);
 				tentativi = null;
 				request.getSession().setAttribute("tentativi", tentativi);
-				
-				//vado alla home
+
+				// vado alla home
 				String homepath = getServletContext().getContextPath() + "/GoToHome";
 				response.sendRedirect(homepath);
 				return;
-				
+
 			} catch (SQLException e) {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to add group");
 				return;
 			}
-			
+
 		} else {
-			
+
 			// altrimenti aumento il contatore
 			tentativi++;
 			request.getSession().setAttribute("tentativi", tentativi);
-			
-			//poi ritorno su questa pagina 
+
+			// poi ritorno su questa pagina
 			ArrayList<User> tuttiUtenti = null;
 			UserDAO userDao = new UserDAO(connection);
 			try {
 				tuttiUtenti = userDao.getAllUser();
-			}catch(SQLException e) {
+			} catch (SQLException e) {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to recover Users");
 				return;
 			}
-			
+
 			String path = "/WEB-INF/Anagrafica.html";
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			
-			//in base al valore del check sugli utenti ritorno un messaggio diverso
-			if(isOk==1) {
+
+			// in base al valore del check sugli utenti ritorno un messaggio diverso
+			if (isOk == 1) {
 				int value = minPartecipanti - utenti.size();
-				ctx.setVariable("errorMsg", "troppi pochi utenti selezionati, aggiungerne almeno " + value); //messaggio di errore
-			}else if(isOk==2) {
-				int value = utenti.size()- maxPartecipanti;
-				ctx.setVariable("errorMsg", "troppi utenti selezionati eliminarne almeno " + value); //messaggio di errore
+				ctx.setVariable("errorMsg", "troppi pochi utenti selezionati, aggiungerne almeno " + value); // messaggio
+																												// di
+																												// errore
+			} else if (isOk == 2) {
+				int value = utenti.size() - maxPartecipanti;
+				ctx.setVariable("errorMsg", "troppi utenti selezionati eliminarne almeno " + value); // messaggio di
+																										// errore
 			}
-			
+
 			ctx.setVariable("selectedUsers", utentiSelezionati);
-			ctx.setVariable("users", tuttiUtenti); 
-			
-			
+			ctx.setVariable("users", tuttiUtenti);
+
 			templateEngine.process(path, ctx, response.getWriter());
-			
+
 			return;
 		}
-
-	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 	

@@ -102,7 +102,7 @@ public class CheckRegistration extends HttpServlet {
 			}
 			
 			//controllo che pwd e cfpwd siano UGUALI
-			if(!checkPwd(pwd, cfpwd)) {
+			if(!pwd.equals(cfpwd)) {
 				path = getServletContext().getContextPath() + "/registrazione.html";
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -142,20 +142,12 @@ public class CheckRegistration extends HttpServlet {
 			
 		}
 
-	// ritorna true se la mail corrispionde alla regex
+	// ritorna true se la mail corrisponde alla regex
 	private boolean testMail(String mail) {
 		String emailPattern = "^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$";
 		Pattern pattern = Pattern.compile(emailPattern);
 		Matcher matcher = pattern.matcher(mail);
 		return matcher.matches();
-	}
-
-	private boolean checkPwd(String pwd, String cfpwd) {
-		if (pwd.equals(cfpwd)) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 }
