@@ -72,13 +72,7 @@ public class GoToAnagrafica extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
-		
-		//salvo tutti i parametri dalla pagina precedente
-		//String nome = (String) session.getAttribute("nome");
-		//String descrizione = (String) session.getAttribute("descrizione");
-		//int giorni = (int) session.getAttribute("giorni");
-		//int minPartecipanti = (int) session.getAttribute("minPartecipanti");
-		//int maxPartecipanti =(int) session.getAttribute("maxPartecipanti");
+
 		
 		//carico tutti gli utenti
 		ArrayList<User> utenti = null;
@@ -94,12 +88,6 @@ public class GoToAnagrafica extends HttpServlet {
 		//mostro tutti gli utenti come parametro 
 		//passo tutti i parametri di prima
 		String path = "/WEB-INF/Anagrafica.html";
-		
-		//request.getSession().setAttribute("nome", nome);
-		//request.getSession().setAttribute("descrizione", descrizione);
-		//request.getSession().setAttribute("giorni", giorni);
-		//request.getSession().setAttribute("minPartecipanti", minPartecipanti);
-		//request.getSession().setAttribute("maxPartecipanti", maxPartecipanti);
 		
 		ServletContext servletContext = getServletContext();
 		

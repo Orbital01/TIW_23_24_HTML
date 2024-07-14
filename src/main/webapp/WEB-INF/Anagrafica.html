@@ -16,7 +16,7 @@
                     <label>
                         <input type="checkbox" th:value="${user.username}" name="selectedUsers" 
                                th:checked="${selectedUsers != null and #arrays.contains(selectedUsers, user.username)}" />
-                        <span th:text="${user.nome}">Username</span>
+                        <span th:text="${user.nome + ' ' + user.cognome}">Username</span>
                     </label>
                 </li>
             </ul>
