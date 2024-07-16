@@ -20,6 +20,8 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import it.polimi.tiw.dao.*;
+
 /**
  * Servlet implementation class CheckGroup
  */
@@ -95,26 +97,46 @@ public class CheckGroup extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
 				return;
 			}
-			giorni = Integer.parseInt(temp);
+			
+			try {
+		        giorni = Integer.parseInt(temp);
+		    } catch (NumberFormatException e) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+		        return;
+		    }
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("minPartecipanti"));
 			if (temp == null || temp.isEmpty()) {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
 				return;
 			}
-			minPartecipanti = Integer.parseInt(temp);
+			
+			try {
+				minPartecipanti = Integer.parseInt(temp);
+		    } catch (NumberFormatException e) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+		        return;
+		    }
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("maxPartecipanti"));
 			if (temp == null || temp.isEmpty()) {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
 				return;
 			}
-			maxPartecipanti = Integer.parseInt(temp);
+	
+			try {
+				maxPartecipanti = Integer.parseInt(temp);
+		    } catch (NumberFormatException e) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+		        return;
+		    }
 			
 		}catch(Exception e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing value");
 			return;
 		}
+		//fine della verifica dei parametri (potrei spostarli in una classe filter)
+		
 		
 		String path;
 		
@@ -128,7 +150,7 @@ public class CheckGroup extends HttpServlet {
 			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}
-		//controllo che giorni sia mmaggiore di 0
+		//controllo che giorni sia maggiore di 0
 		if(giorni==0){
 			path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
 			ServletContext servletContext = getServletContext();
@@ -138,6 +160,26 @@ public class CheckGroup extends HttpServlet {
 			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}
+		
+		//controllo che non esista un gruppo con il nome uguale
+		GruppiDAO groupDAO = new GruppiDAO(connection);
+		try {
+			
+			if(groupDAO.alreadyExistingGroup(nome)) {
+				path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
+				ServletContext servletContext = getServletContext();
+				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+				ctx.setVariable("errorMsg", "il nome è già in uso");
+				path = "/index.html";
+				templateEngine.process(path, ctx, response.getWriter());
+				return;	
+			}
+			
+		}catch (SQLException e){
+			response.sendError(HttpServletResponse.SC_NO_CONTENT, "unable to get groups");
+		}
+		
+		
 		
 		//se tutto ok vado alla pagina della anagrafica, passando i dati inseriti come parametro
 		request.getSession().setAttribute("nome", nome);

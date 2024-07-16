@@ -108,6 +108,29 @@ public class CreateGroup extends HttpServlet {
 		for (String userId : utentiSelezionati) {
 			utenti.add(userId);
 		}
+		
+		//controllo che gli utenti selezionati esistano nella base di dati
+		UserDAO uDAO = new UserDAO(connection);
+		ArrayList<String> allUsernames = new ArrayList<>();
+		
+		try {
+			ArrayList<User> allUsers = uDAO.getAllUser();
+			
+			 for (User u : allUsers) {
+				 	allUsernames.add(u.getUsername());
+	            }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		for(String userID : utenti) {
+			if(!allUsernames.contains(userID)) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "user added does not exist");
+				return;
+			}
+		}
+		
 
 		// controllo che il numero di elementi sia corretto
 		int isOk = checkNumPart(utentiSelezionati, minPartecipanti, maxPartecipanti);
