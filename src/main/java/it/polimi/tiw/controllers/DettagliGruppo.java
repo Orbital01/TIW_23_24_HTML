@@ -87,7 +87,7 @@ public class DettagliGruppo extends HttpServlet {
 			return;
 		}
 		
-		
+		//recupero il gruppo 
 		Gruppi group = null;
 		try {
 			group = new GruppiDAO(connection).getGroupById(id);
