@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>ErrorPage</title>
+	<link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+<body>
+	<div class="background">
+		<div class="pageContainer">
+		
+		<h3 class="errore" th:text = "${errorMessage}"> </h3>
+		<a th:href="@{/GoToHome}">Go Back</a>
+		
+		</div>
+	</div>
+</body>
+</html>

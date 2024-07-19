@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -76,7 +77,12 @@ public class GoToHome extends HttpServlet{
 		try {
 			adminGroups = gruppiDAO.getActiveGroupsByUser(user.getUsername());
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover groups");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "unable to recover Groups");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 			return;
 		}
 		
@@ -85,7 +91,12 @@ public class GoToHome extends HttpServlet{
 		try {
 			GroupsWithUser = partecipationDAO.getGroupsWithUser(user.getUsername());
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover groups");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "unable to recover Groups");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 			return;
 		}
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.dao.UserDAO;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -81,7 +82,12 @@ public class GoToAnagrafica extends HttpServlet {
 		utenti = userDao.getAllUser();
 		
 		}catch(SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to recover Users");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "unable to recover Users");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 			return;
 		}
 		

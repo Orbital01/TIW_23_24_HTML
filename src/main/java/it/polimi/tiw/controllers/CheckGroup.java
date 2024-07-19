@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -88,51 +89,97 @@ public class CheckGroup extends HttpServlet {
 			nome = StringEscapeUtils.escapeJava(request.getParameter("nome"));
 			descrizione = StringEscapeUtils.escapeJava(request.getParameter("descrizione"));
 			if (nome == null || nome.isEmpty() || descrizione == null || descrizione.isEmpty()) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
+				
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Missing Parameters");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
+	            
 				return;
 			}
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("giorni"));
 			if (temp == null || temp.isEmpty()) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
+				
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Missing Parameters");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
+	            
 				return;
 			}
 			
 			try {
 		        giorni = Integer.parseInt(temp);
 		    } catch (NumberFormatException e) {
-		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+		    	
+		    	// Imposto l'errore
+	            request.setAttribute("errorMessage", "Invalid number format");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
+	            
 		        return;
 		    }
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("minPartecipanti"));
 			if (temp == null || temp.isEmpty()) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Missing Parameters");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 			
 			try {
 				minPartecipanti = Integer.parseInt(temp);
 		    } catch (NumberFormatException e) {
-		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+		    	// Imposto l'errore
+	            request.setAttribute("errorMessage", "Invalid number format");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 		        return;
 		    }
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("maxPartecipanti"));
 			if (temp == null || temp.isEmpty()) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Missing Parameters");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 	
 			try {
 				maxPartecipanti = Integer.parseInt(temp);
 		    } catch (NumberFormatException e) {
-		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+		     // Imposto l'errore
+	            request.setAttribute("errorMessage", "Invalid number format");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 		        return;
 		    }
 			
 		}catch(Exception e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing value");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "Missing Value");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 			return;
 		}
 		//fine della verifica dei parametri (potrei spostarli in una classe filter)
@@ -209,13 +256,8 @@ public class CheckGroup extends HttpServlet {
 	}
 	
 	private Boolean checkMinMax(int min, int max) {
-		if(min<0 || max<0) {
-			return false;
-		} else if(min<=max) {
-			return true;
-		}else {
-			return false;
-		}
+		if(min<0 || max<0) return false;
+		return min <= max;
 	}
 
 }

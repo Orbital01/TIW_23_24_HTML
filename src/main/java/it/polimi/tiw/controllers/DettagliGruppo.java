@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -83,7 +84,12 @@ public class DettagliGruppo extends HttpServlet {
 		try {
 			id = Integer.parseInt(id_param);
 		} catch (NumberFormatException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid group ID");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "Invalid group ID");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 			return;
 		}
 		
@@ -96,7 +102,13 @@ public class DettagliGruppo extends HttpServlet {
 		}
 		
 		if (group == null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "Group not found");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
+            
 			return;
 		}
 			
@@ -120,8 +132,13 @@ public class DettagliGruppo extends HttpServlet {
 			for(String s : partecipanti){
 				System.out.println(s);
 			}	
-			
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Group not found");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "Group not found");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
+            
 			return;
 		}
 				

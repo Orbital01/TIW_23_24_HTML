@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -69,12 +71,25 @@ public class CheckLogin extends HttpServlet{
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("Password"));
 			
 			if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters" + usrn + pwd);
+				
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Missing parameters" + usrn + pwd);
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
+				
 				return;
 			}
 		} catch (Exception e) {
-			// for debugging only e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
+			
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "Missing credential value");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
+            
 			return;
 		}
 		
@@ -85,8 +100,12 @@ public class CheckLogin extends HttpServlet{
 		try {
 			u = usr.checkCredentials(usrn, pwd);
 		} catch (SQLException e) {
-			// throw new ServletException(e);
-			response.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Failure in database credential checking");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "Failure in database credential checking");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 			return;
 		}
 		

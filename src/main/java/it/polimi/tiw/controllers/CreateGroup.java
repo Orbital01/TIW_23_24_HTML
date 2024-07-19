@@ -9,6 +9,7 @@ import it.polimi.tiw.beans.User;
 import it.polimi.tiw.dao.*;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -126,7 +127,12 @@ public class CreateGroup extends HttpServlet {
 		
 		for(String userID : utenti) {
 			if(!allUsernames.contains(userID)) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "user added does not exist");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "user added does not exist");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 		}
@@ -169,7 +175,12 @@ public class CreateGroup extends HttpServlet {
 				return;
 
 			} catch (SQLException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to add group");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "unable to add group");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 
@@ -185,7 +196,12 @@ public class CreateGroup extends HttpServlet {
 			try {
 				tuttiUtenti = userDao.getAllUser();
 			} catch (SQLException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to recover Users");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "unable to recover Users");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 

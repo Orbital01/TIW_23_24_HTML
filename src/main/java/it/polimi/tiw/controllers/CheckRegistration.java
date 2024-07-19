@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -79,12 +81,23 @@ public class CheckRegistration extends HttpServlet {
 				//controllo che nessuno dei campi sia vuoto 
 				if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty() ||
 						email == null || email.isEmpty() || cfpwd==null || cfpwd.isEmpty()) {
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
+					
+					// Imposto l'errore
+		            request.setAttribute("errorMessage", "Missing Parameters");
+		            
+		            // Forward alla servlet GoToError
+		            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+		            dispatcher.forward(request, response);
 					return;
 				}
 				
 			}catch(Exception e) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing value");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Missing Value");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 			
@@ -136,7 +149,12 @@ public class CheckRegistration extends HttpServlet {
 				}
 				
 			}catch(SQLException e) {
-				response.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Failure in DB while inserting new user");
+				// Imposto l'errore
+	            request.setAttribute("errorMessage", "Failure in DB while inserting new user");
+	            
+	            // Forward alla servlet GoToError
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+	            dispatcher.forward(request, response);
 				return;
 			}
 			
