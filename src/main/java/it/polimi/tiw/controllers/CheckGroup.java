@@ -218,7 +218,6 @@ public class CheckGroup extends HttpServlet {
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 				ctx.setVariable("errorMsg", "il nome è già in uso");
-				path = "/index.html";
 				templateEngine.process(path, ctx, response.getWriter());
 				return;	
 			}

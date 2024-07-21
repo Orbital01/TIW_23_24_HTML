@@ -94,9 +94,20 @@ public class CreateGroup extends HttpServlet {
 		// prendo tutti i parametri dalla servlet precedente
 		String nome = (String) session.getAttribute("nome");
 		String descrizione = (String) session.getAttribute("descrizione");
-		int giorni = (int) session.getAttribute("giorni");
-		int minPartecipanti = (int) session.getAttribute("minPartecipanti");
-		int maxPartecipanti = (int) session.getAttribute("maxPartecipanti");
+		Integer giorni = (Integer) session.getAttribute("giorni");
+		Integer minPartecipanti = (Integer) session.getAttribute("minPartecipanti");
+		Integer maxPartecipanti = (Integer) session.getAttribute("maxPartecipanti");
+		
+		if(nome==null || descrizione==null || giorni==null || minPartecipanti==null || maxPartecipanti==null) {
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "you're not creating a group in the proper way");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
+			return;
+		}
+		
 
 		// prendo lo username di chi sta effettuando l'operazione
 		User user = (User) session.getAttribute("user");
@@ -170,7 +181,14 @@ public class CreateGroup extends HttpServlet {
 				//resetto il contatore
 				tentativi = null;
 				request.getSession().setAttribute("tentativi", tentativi);
-
+				
+				//resetto i valori 
+				nome=null;
+				descrizione=null;
+				giorni=null;
+				minPartecipanti=null;
+				maxPartecipanti=null;
+		
 				// vado alla home
 				String homepath = getServletContext().getContextPath() + "/GoToHome";
 				response.sendRedirect(homepath);
