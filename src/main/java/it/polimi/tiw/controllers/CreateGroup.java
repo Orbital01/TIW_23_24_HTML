@@ -166,6 +166,8 @@ public class CreateGroup extends HttpServlet {
 
 			try {
 				groupDao.addGroup(nome, descrizione, giorni, admin, maxPartecipanti, minPartecipanti, utenti);
+				
+				//resetto il contatore
 				tentativi = null;
 				request.getSession().setAttribute("tentativi", tentativi);
 
@@ -206,19 +208,17 @@ public class CreateGroup extends HttpServlet {
 			}
 
 			String path = "/WEB-INF/Anagrafica.html";
+			
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
 			// in base al valore del check sugli utenti ritorno un messaggio diverso
 			if (isOk == 1) {
 				int value = minPartecipanti - utenti.size();
-				ctx.setVariable("errorMsg", "troppi pochi utenti selezionati, aggiungerne almeno " + value); // messaggio
-																												// di
-																												// errore
+				ctx.setVariable("errorMsg", "troppi pochi utenti selezionati, aggiungerne almeno " + value); // messaggio di errore
 			} else if (isOk == 2) {
 				int value = utenti.size() - maxPartecipanti;
-				ctx.setVariable("errorMsg", "troppi utenti selezionati eliminarne almeno " + value); // messaggio di
-																										// errore
+				ctx.setVariable("errorMsg", "troppi utenti selezionati eliminarne almeno " + value); // messaggio di errore
 			}
 
 			ctx.setVariable("selectedUsers", utentiSelezionati);

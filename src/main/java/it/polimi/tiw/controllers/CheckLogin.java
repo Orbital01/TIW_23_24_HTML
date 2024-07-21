@@ -70,7 +70,7 @@ public class CheckLogin extends HttpServlet{
 			usrn = StringEscapeUtils.escapeJava(request.getParameter("Username"));
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("Password"));
 			
-			if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
+			if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty() || usrn.isBlank() || pwd.isBlank()) {
 				
 				// Imposto l'errore
 	            request.setAttribute("errorMessage", "Missing parameters" + usrn + pwd);

@@ -88,7 +88,8 @@ public class CheckGroup extends HttpServlet {
 		try {
 			nome = StringEscapeUtils.escapeJava(request.getParameter("nome"));
 			descrizione = StringEscapeUtils.escapeJava(request.getParameter("descrizione"));
-			if (nome == null || nome.isEmpty() || descrizione == null || descrizione.isEmpty()) {
+			
+			if (nome == null || nome.isEmpty() || descrizione == null || descrizione.isEmpty() || nome.isBlank() || descrizione.isBlank()) {
 				
 				// Imposto l'errore
 	            request.setAttribute("errorMessage", "Missing Parameters");
@@ -101,7 +102,7 @@ public class CheckGroup extends HttpServlet {
 			}
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("giorni"));
-			if (temp == null || temp.isEmpty()) {
+			if (temp == null || temp.isEmpty() || temp.isBlank()) {
 				
 				// Imposto l'errore
 	            request.setAttribute("errorMessage", "Missing Parameters");
@@ -128,7 +129,7 @@ public class CheckGroup extends HttpServlet {
 		    }
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("minPartecipanti"));
-			if (temp == null || temp.isEmpty()) {
+			if (temp == null || temp.isEmpty() || temp.isBlank()) {
 				// Imposto l'errore
 	            request.setAttribute("errorMessage", "Missing Parameters");
 	            
@@ -151,7 +152,7 @@ public class CheckGroup extends HttpServlet {
 		    }
 			
 			temp = StringEscapeUtils.escapeJava(request.getParameter("maxPartecipanti"));
-			if (temp == null || temp.isEmpty()) {
+			if (temp == null || temp.isEmpty() || temp.isBlank()) {
 				// Imposto l'errore
 	            request.setAttribute("errorMessage", "Missing Parameters");
 	            

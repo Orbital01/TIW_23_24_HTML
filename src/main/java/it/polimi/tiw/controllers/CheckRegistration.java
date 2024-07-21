@@ -80,7 +80,8 @@ public class CheckRegistration extends HttpServlet {
 				
 				//controllo che nessuno dei campi sia vuoto 
 				if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty() ||
-						email == null || email.isEmpty() || cfpwd==null || cfpwd.isEmpty()) {
+						email == null || email.isEmpty() || cfpwd==null || cfpwd.isEmpty()
+						|| usrn.isBlank() || pwd.isBlank() || email.isBlank() || cfpwd.isBlank()) {
 					
 					// Imposto l'errore
 		            request.setAttribute("errorMessage", "Missing Parameters");
