@@ -103,6 +103,9 @@ public class GruppiDAO {
 			pstatement.setInt(6, maxPartecipanti);
 			pstatement.executeUpdate();
 			
+			// aggiunto i partecipanti
+			addToGroup(connection, nome, admin, partecipanti);
+			
 			connection.commit();
 			
 		}catch (SQLException e) {
@@ -114,9 +117,6 @@ public class GruppiDAO {
 			// Re-enable auto-commit
 			connection.setAutoCommit(true);
 		}
-
-		// aggiunto i partecipanti
-		addToGroup(connection, nome, admin, partecipanti);
 
 	}
 

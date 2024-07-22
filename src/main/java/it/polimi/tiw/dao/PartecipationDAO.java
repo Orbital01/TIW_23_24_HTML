@@ -75,23 +75,11 @@ public class PartecipationDAO {
 		
 		for(String username : usernames) {
 			
-			connection.setAutoCommit(false);
-			
 			try (PreparedStatement pstatement = connection.prepareStatement(query);){
 				pstatement.setInt(1, id);
 				pstatement.setString(2, username);
 				pstatement.executeUpdate();
 				
-				connection.commit();
-				
-			}catch (SQLException e) {
-				// Rollback the transaction
-				connection.rollback();
-				throw e;
-				
-			} finally {
-				// Re-enable auto-commit
-				connection.setAutoCommit(true);
 			}
 		}
 	}
