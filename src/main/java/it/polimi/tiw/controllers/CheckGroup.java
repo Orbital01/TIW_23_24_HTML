@@ -190,7 +190,7 @@ public class CheckGroup extends HttpServlet {
 		
 		//controllo che i parametri min e max siano giusti 
 		if(!checkMinMax(minPartecipanti, maxPartecipanti)) {
-			path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
+			//path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "il minimo non può essere maggiore del massimo");
@@ -200,11 +200,11 @@ public class CheckGroup extends HttpServlet {
 		}
 		//controllo che giorni sia maggiore di 0
 		if(giorni==0){
-			path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
+			//path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "un gruppo non può avere durata 0 giorni");
-			path = "/index.html";
+			path = "/WEB-INF/CreateGroup.html";
 			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}
@@ -214,10 +214,11 @@ public class CheckGroup extends HttpServlet {
 		try {
 			
 			if(groupDAO.alreadyExistingGroup(nome)) {
-				path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
+				//path = getServletContext().getContextPath() + "/WEB-INF/CreateGroup.html";
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-				ctx.setVariable("errorMsg", "il nome è già in uso");
+				ctx.setVariable("errorMsg", "name already taken");
+				path = "/WEB-INF/CreateGroup.html";
 				templateEngine.process(path, ctx, response.getWriter());
 				return;	
 			}

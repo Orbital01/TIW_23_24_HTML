@@ -72,7 +72,11 @@ public class PartecipationDAO {
 	// aggiunge gli inviti al gruppo appena creato
 	public void addPartecipation(ArrayList<String> usernames, int id) throws SQLException {
 		String query = "INSERT INTO partecipation VALUES (?, ?)";
+		
 		for(String username : usernames) {
+			
+			connection.setAutoCommit(false);
+			
 			try (PreparedStatement pstatement = connection.prepareStatement(query);){
 				pstatement.setInt(1, id);
 				pstatement.setString(2, username);
