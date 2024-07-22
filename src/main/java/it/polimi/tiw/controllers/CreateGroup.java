@@ -195,6 +195,8 @@ public class CreateGroup extends HttpServlet {
 				return;
 
 			} catch (SQLException e) {
+				e.printStackTrace();
+				
 				// Imposto l'errore
 	            request.setAttribute("errorMessage", "unable to add group");
 	            
