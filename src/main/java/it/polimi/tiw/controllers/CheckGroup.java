@@ -224,7 +224,12 @@ public class CheckGroup extends HttpServlet {
 			}
 			
 		}catch (SQLException e){
-			response.sendError(HttpServletResponse.SC_NO_CONTENT, "unable to get groups");
+			// Imposto l'errore
+            request.setAttribute("errorMessage", "unable to get groups");
+            
+            // Forward alla servlet GoToError
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/GoToError");
+            dispatcher.forward(request, response);
 		}
 		
 		
